@@ -7,7 +7,7 @@ That's why I came up with an idea for a program that will make your life easier!
 
 Imagine having all the answers to your homework without spending hours researching! This software will make completing your homework much more comfortable, reducing your stress levels and freeing up your time to focus on other essential activities.
 
-This program uses the OpenAI API to generate answers to a set of questions provided in a Microsoft Word document. The program then writes the answers to a new Microsoft Word document.
+This program uses the OpenAI API to generate answers to a set of questions provided in a Microsoft Word document. The program then writes the answers to a new Microsoft Word document. Make sure you have your java project made in maven.
 
 The program begins by importing the necessary libraries for working with Word documents and making HTTP requests.
 ```
