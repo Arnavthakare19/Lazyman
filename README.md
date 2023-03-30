@@ -27,3 +27,70 @@ import org.json.JSONObject;
 import java.util.Scanner;
 
 ```
+The chatGPT function is used to send a question to the OpenAI API and receive an answer. It takes a string argument question and returns a string answer.
+We create an object con to open a connection with OpenAi website. The website is mentioned in url variable as a string. It is available in the official documentation of OpenAI.
+```
+ String url = "https://api.openai.com/v1/completions";
+ HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+```
+
+NOTE : Replace YOUR-API-KEY in the request property with your personal api key that can be easily created once you make an account in OpenAI.
+```
+con.setRequestProperty("Authorization", "Bearer YOUR-API-KEY");
+```
+
+
+You can change the word limit of the responses recieved by changing the max_tokens(remember gpt 3.5 has a hard set limit of 4000 tokens). If you want to make your vary each time you ask the same question then change the temperature in data.put. Increasing the temperature adds the variation in the responses of your answers. Higher the temperature the lesser the accuracy of the response and more variation it gives.
+```
+    data.put("model", "text-davinci-003");
+    data.put("prompt", question);
+    data.put("max_tokens", 4000);
+    data.put("temperature", 1.0);
+```
+
+In the main function, the program prompts the user to enter the location of the input Word document and reads the questions from the document using the XWPFWordExtractor class.
+
+NOTE : After copying the path of the file always make sure to add an extra '/' to the path.
+For example : 
+
+```
+  //Users//pankaj//test.docx
+  Instead of /Users/pankaj/test.docx
+```
+
+
+The lines are each seperated via String.split()function in java. These serves as array to store the questions in the docx files.
+```
+FileInputStream fis = new FileInputStream(loc);
+XWPFDocument document = new XWPFDocument(fis);
+XWPFWordExtractor extractor = new XWPFWordExtractor(document);
+String[] questions = extractor.getText().split("\n");
+
+```
+
+The program then loops over each question and generates an answer using the chatGPT function.
+```
+String[] answers = new String[questions.length];
+for (int i = 0; i < questions.length; i++) 
+{
+    answers[i] = chatGPT(questions[i]);
+    answers[i].trim();
+}
+
+```
+
+The program prompts the user to enter the location where the output Word document should be saved and writes the answers to a new document using the XWPFDocument class.You can modify how the answers should be stored in the docx file. If you use the cold as it is then you will have answers stored in bold. You may modify its font, size, style, etc.
+
+```
+
+    XWPFParagraph p1 = doc.createParagraph();
+    p1.setAlignment(ParagraphAlignment.LEFT);
+    XWPFRun r1 = p1.createRun();
+    r1.setBold(true);
+    r1.setFontSize(12);
+    r1.setFontFamily("New Roman");
+    for (int i = 0; i < answers.length; i++) 
+    {
+        r1.setText((i+1)+")"+answers
+    }
+```
