@@ -28,7 +28,7 @@ public class App
 {
     public static String chatGPT(String prompt) {
        String url = "https://api.openai.com/v1/chat/completions";
-       String apiKey = "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";
+       String apiKey = "YOUR-API-KEY";
        String model = "gpt-3.5-turbo";
        int maxRetries = 3; // Maximum number of retries
 
